@@ -2,6 +2,7 @@ import UIKit
 
 class CustomBannerView: UIView {
     
+    @IBOutlet private var contentView: UIView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var seeAllButton: UIButton!
@@ -10,9 +11,9 @@ class CustomBannerView: UIView {
     private var currentPage = 0
     
     var announcements: [Announcement] = [
-        Announcement(icon: "exclamationmark.triangle.fill", text: "Kasım kampanyası nedeniyle kargolarınızda anlık gecikme yaşanabilir."),
-        Announcement(icon: "gift.fill", text: "Yılbaşına özel indirimler başladı!"),
-        Announcement(icon: "bell.fill", text: "Yeni ürünlerimiz mağazalarımızda sizleri bekliyor.")
+        Announcement(icon: "megaphone", text: "Kasım kampanyası nedeniyle kargolarınızda anlık gecikme yaşanabilir."),
+        Announcement(icon: "gift", text: "Yılbaşına özel indirimler başladı!"),
+        Announcement(icon: "bell", text: "Yeni ürünlerimiz mağazalarımızda sizleri bekliyor.")
     ]
     
     override init(frame: CGRect) {
@@ -26,32 +27,66 @@ class CustomBannerView: UIView {
     }
     
     private func commonInit() {
-        if let view = Bundle.main.loadNibNamed("CustomBannerView", owner: self, options: nil)?.first as? UIView {
-            view.frame = bounds
-            addSubview(view)
-            setupUI()
-            setupCollectionView()
-            startTimer()
-        }
+        // XIB dosyasını yükle
+        Bundle.main.loadNibNamed("CustomBannerView", owner: self)
+        addSubview(contentView)
+        
+        // ContentView constraints
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            contentView.topAnchor.constraint(equalTo: topAnchor),
+            contentView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            contentView.bottomAnchor.constraint(equalTo: bottomAnchor)
+        ])
+        
+        setupUI()
+        setupCollectionView()
+        startTimer()
     }
     
     private func setupUI() {
+        // View ayarları
         layer.cornerRadius = 12
+        clipsToBounds = true
         backgroundColor = UIColor(red: 0.965, green: 0.965, blue: 0.973, alpha: 1.0)
         
+        // CollectionView ayarları
+        collectionView.backgroundColor = .clear
+        
+        // PageControl ayarları
         pageControl.numberOfPages = announcements.count
         pageControl.currentPage = 0
+        pageControl.pageIndicatorTintColor = UIColor.lightGray
+        pageControl.currentPageIndicatorTintColor = UIColor(red: 0.365, green: 0.247, blue: 0.737, alpha: 1.0)
         
+        // Button ayarları
         seeAllButton.backgroundColor = UIColor(red: 0.369, green: 0.243, blue: 0.737, alpha: 1.0)
-        seeAllButton.setTitleColor(.white, for: .normal)
+        seeAllButton.setTitleColor(UIColor(red: 0.902, green: 0.878, blue: 0.961, alpha: 1.0), for: .normal)
         seeAllButton.layer.cornerRadius = 8
+        seeAllButton.titleLabel?.font = .systemFont(ofSize: 12)
+        seeAllButton.setTitle("Tüm duyuruları incele", for: .normal)
     }
     
     private func setupCollectionView() {
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.register(AnnouncementCell.self, forCellWithReuseIdentifier: "AnnouncementCell")
+        
+        // XIB'den cell'i register et
+        let nib = UINib(nibName: "AnnouncementCell", bundle: nil)
+        collectionView.register(nib, forCellWithReuseIdentifier: "AnnouncementCell")
         collectionView.isPagingEnabled = true
+        
+        // CollectionView Layout
+        if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+            layout.scrollDirection = .horizontal
+            layout.minimumLineSpacing = 0
+            layout.minimumInteritemSpacing = 0
+            
+            // Cell boyutunu CollectionView boyutuna eşitle
+            layout.itemSize = CGSize(width: collectionView.bounds.width, height: collectionView.bounds.height)
+            layout.estimatedItemSize = .zero
+        }
     }
     
     private func startTimer() {
