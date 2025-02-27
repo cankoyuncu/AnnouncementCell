@@ -14,19 +14,15 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gcr-vk-14m">
-                    <rect key="frame" x="16" y="59" width="25" height="25"/>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gcr-vk-14m">
+                    <rect key="frame" x="16" y="75" width="24" height="22.333333333333329"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="24" id="4T0-nI-9B0"/>
-                        <constraint firstAttribute="width" relation="lessThanOrEqual" constant="75" id="JB9-C8-xt0"/>
-                        <constraint firstAttribute="height" relation="lessThanOrEqual" constant="75" id="Xpe-eW-sdg"/>
-                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="hO2-ZX-j1s"/>
                         <constraint firstAttribute="width" constant="24" id="k8b-bi-M5e"/>
-                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="wYk-MM-yUc"/>
                     </constraints>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ec7-Mm-H6V">
-                    <rect key="frame" x="56" y="75" width="321" height="60"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ec7-Mm-H6V">
+                    <rect key="frame" x="56" y="75" width="321" height="20.333333333333329"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="321" id="led-Lw-es8"/>
                         <constraint firstAttribute="height" constant="73" id="nny-wa-uy9"/>
@@ -43,15 +39,11 @@
                 <constraint firstItem="gcr-vk-14m" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="16" id="41v-4d-psP"/>
                 <constraint firstItem="gcr-vk-14m" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="7hw-3a-GL3"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="ec7-Mm-H6V" secondAttribute="bottom" constant="688" id="LSy-SX-en1"/>
-                <constraint firstItem="ec7-Mm-H6V" firstAttribute="leading" secondItem="gcr-vk-14m" secondAttribute="trailing" constant="240" id="OII-tV-DU2"/>
-                <constraint firstItem="ec7-Mm-H6V" firstAttribute="leading" secondItem="gcr-vk-14m" secondAttribute="trailing" constant="16" id="cpQ-nB-Lbd"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="ec7-Mm-H6V" secondAttribute="trailing" constant="16" id="ehj-pu-25e"/>
-                <constraint firstItem="ec7-Mm-H6V" firstAttribute="leading" secondItem="gcr-vk-14m" secondAttribute="trailing" constant="16" id="ei5-zg-j2X"/>
                 <constraint firstItem="ec7-Mm-H6V" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="16" id="i7B-wB-2rB"/>
-                <constraint firstItem="gcr-vk-14m" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="qTZ-Nu-Fiz"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="gcr-vk-14m" secondAttribute="bottom" constant="686" id="rSU-vm-FFE"/>
-                <constraint firstItem="ec7-Mm-H6V" firstAttribute="leading" secondItem="gcr-vk-14m" secondAttribute="trailing" constant="16" id="rsQ-bz-sXg"/>
             </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="iconImageView" destination="gcr-vk-14m" id="jN4-vf-iXW"/>
                 <outlet property="textLabel" destination="ec7-Mm-H6V" id="86j-gr-Mh1"/>

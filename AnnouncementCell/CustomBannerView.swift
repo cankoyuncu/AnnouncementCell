@@ -7,6 +7,7 @@ struct AnnouncementItem {
     let imageName: String
 }
 
+
 protocol CustomBannerViewDelegate: AnyObject {
     func didTapSeeAllAnnouncements()
 }

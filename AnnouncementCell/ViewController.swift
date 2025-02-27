@@ -3,6 +3,7 @@ import UIKit
 class ViewController: UIViewController {
     
     private var bannerView: CustomBannerView!
+    @IBOutlet private weak var banner: CustomBannerView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
