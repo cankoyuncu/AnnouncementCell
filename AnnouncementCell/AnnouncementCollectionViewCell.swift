@@ -94,16 +94,18 @@ public class AnnouncementCollectionViewCell: UICollectionViewCell {
         
         titleLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         descriptionLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        descriptionLabel.numberOfLines = 4  // Daha fazla satır göstermesine izin verin
+        descriptionLabel.numberOfLines = 5  // Daha fazla satır göstermesine izin verin
         descriptionLabel.textAlignment = .left
     }
 
-    // configure metodunu güncelleyin
-    public func configure(with title: String, description: String, imageName: String) {
-        if title.isEmpty {
-            titleLabel.isHidden = true
+    // configure metodunu güncelleyerek standart bir ikon kullanıyoruz ve title'ı gizliyoruz
+
+    public func configure(with description: String, imageName: String) {
+        // Title etiketini view hiyerarşisinden kaldır
+        titleLabel.removeFromSuperview()
             
-            // Başlık yoksa açıklama metnini doğrudan ikona hizalı başlatın
+            // Açıklama metni için konumlandırma
+
             NSLayoutConstraint.deactivate(descriptionLabel.constraints)
             NSLayoutConstraint.activate([
                 descriptionLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 15),
@@ -111,48 +113,22 @@ public class AnnouncementCollectionViewCell: UICollectionViewCell {
                 descriptionLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -15),
                 descriptionLabel.bottomAnchor.constraint(lessThanOrEqualTo: containerView.bottomAnchor, constant: -15)
             ])
-        } else {
-            titleLabel.isHidden = false
-            titleLabel.text = title
-        }
         
-        descriptionLabel.text = description
-        
-        // Resmi ayarla (varsa)
-        if let image = UIImage(named: imageName) {
-            imageView.image = image
-        } else {
-            // Farklı simge şekilleri ve renkleri
-            var iconName = "bell.fill"
-            var iconColor = UIColor.systemPurple
-            
-            // Duyuru türüne göre farklı ikonlar
-            if imageName.contains("campaign") {
-                iconName = "tag.fill"
-                iconColor = .systemRed
-            } else if imageName.contains("maintenance") {
-                iconName = "wrench.fill"
-                iconColor = .systemOrange
-            } else if imageName.contains("new_products") {
-                iconName = "gift.fill"
-                iconColor = .systemGreen
-            } else if imageName.contains("survey") {
-                iconName = "text.bubble.fill"
-                iconColor = .systemBlue
-            }
-            
-            imageView.image = UIImage(systemName: iconName)
-            imageView.tintColor = iconColor
-            imageView.backgroundColor = .clear // Arka plan rengini kaldır
+            // Acıklama metni ayarla
+            descriptionLabel.text = description
+
+            // Standart mor duyuru ikonu kullan
+            imageView.image = UIImage(systemName: "megaphone.fill") // SF Symbol kullanıyoruz benzer bir ikon için
+            imageView.tintColor = UIColor(red: 0.37, green: 0.24, blue: 0.74, alpha: 1.0) // Mor renk #5D3EBC
+            imageView.backgroundColor = .clear
             imageView.contentMode = .scaleAspectFit
-        }
+        
     }
     
     // public erişim belirteci ekledim
     public override func prepareForReuse() {
         super.prepareForReuse()
         imageView.image = nil
-        titleLabel.text = nil
         descriptionLabel.text = nil
     }
 }

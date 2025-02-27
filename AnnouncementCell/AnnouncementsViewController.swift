@@ -42,40 +42,10 @@ class AnnouncementsViewController: UIViewController {
     }
     
     private func loadAnnouncements() {
-        // ViewController'dan alınabilecek örnek duyurular
-        announcements = [
-            AnnouncementItem(
-                title: "Üyelik Avantajı",
-                description: "Yeni üyelerimize özel ilk alışverişte %30 indirim ve ücretsiz kargo ayrıcalığı sunuyoruz!",
-                imageName: "campaign"
-            ),
-            AnnouncementItem(
-                title: "Bakım Duyurusu",
-                description: "15 Mart Cuma gecesi 02:00-04:00 saatleri arasında sistemlerimiz bakımda olacağından hizmet veremeyeceğiz.",
-                imageName: "maintenance"
-            ),
-            AnnouncementItem(
-                title: "Yeni Koleksiyon",
-                description: "Bahar koleksiyonumuz tüm mağazalarımızda ve online platformumuzda sizleri bekliyor. Şık ve rahat modeller!",
-                imageName: "new_products"
-            ),
-            AnnouncementItem(
-                title: "Görüşünüz Önemli",
-                description: "Hizmet kalitemizi artırmak için görüşleriniz bizim için çok değerli. Ankete katılarak fikirlerinizi bizimle paylaşın.",
-                imageName: "survey"
-            ),
-            AnnouncementItem(
-                title: "Kargo Bildirimi",
-                description: "Kasım kampanyası nedeniyle kargolarınızda anlık gecikme yaşanabilir. Anlayışınız için teşekkür ederiz.",
-                imageName: "campaign"
-            ),
-            AnnouncementItem(
-                title: "Tatil Günleri",
-                description: "29-30 Ekim tarihleri arasında müşteri hizmetlerimiz kapalı olacaktır. Acil talepleriniz için e-posta adresimize yazabilirsiniz.",
-                imageName: "maintenance"
-            )
-        ]
+        // duyurular AnnouncementDataManager kısmından alınıyor.
+        announcements = AnnouncementDataManager.shared.announcements
         
+        //TableView'ı guncelle
         tableView.reloadData()
     }
 }
@@ -98,15 +68,25 @@ extension AnnouncementsViewController: UITableViewDataSource, UITableViewDelegat
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
+    
+    func tableView(_ tableView: UITableView, estimatedRowHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 120 // Tahmini yükseklik
+    }
 }
 
 // MARK: - AnnouncementTableViewCell
 class AnnouncementTableViewCell: UITableViewCell {
     
+    // UI elemanları
     private let containerView = UIView()
     private let iconImageView = UIImageView()
-    private let titleLabel = UILabel()
     private let descriptionLabel = UILabel()
+    
+    // Saklanan constraint referansları
+    private var descriptionTopConstraint: NSLayoutConstraint!
+    private var descriptionBottomConstraint: NSLayoutConstraint!
+    private var descriptionLeadingConstraint: NSLayoutConstraint!
+    private var descriptionTrailingConstraint: NSLayoutConstraint!
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -119,6 +99,7 @@ class AnnouncementTableViewCell: UITableViewCell {
     }
     
     private func setupViews() {
+        // Hücre ayarları
         selectionStyle = .none
         backgroundColor = .clear
         contentView.backgroundColor = .clear
@@ -135,17 +116,9 @@ class AnnouncementTableViewCell: UITableViewCell {
         
         // İkon ayarları
         iconImageView.contentMode = .scaleAspectFit
-        iconImageView.layer.cornerRadius = 8
         iconImageView.clipsToBounds = true
         iconImageView.translatesAutoresizingMaskIntoConstraints = false
         containerView.addSubview(iconImageView)
-        
-        // Başlık ayarları
-        titleLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
-        titleLabel.textColor = .black
-        titleLabel.numberOfLines = 1
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        containerView.addSubview(titleLabel)
         
         // Açıklama ayarları
         descriptionLabel.font = UIFont.systemFont(ofSize: 14)
@@ -154,80 +127,51 @@ class AnnouncementTableViewCell: UITableViewCell {
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
         containerView.addSubview(descriptionLabel)
         
-        // Auto Layout constraints
+        // Container view ve ikon için constraint'ler
         NSLayoutConstraint.activate([
-            // Container view
             containerView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
             containerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             containerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             containerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
             
-            // İkon
+            // İkon constraints - Sabit 35x35 boyutunda
             iconImageView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 15),
             iconImageView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 15),
             iconImageView.widthAnchor.constraint(equalToConstant: 35),
-            iconImageView.heightAnchor.constraint(equalToConstant: 35),
-            
-            // Başlık
-            titleLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 15),
-            titleLabel.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: 12),
-            titleLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -15),
-            
-            // Açıklama
-            descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
-            descriptionLabel.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: 12),
-            descriptionLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -15),
-            descriptionLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -15)
+            iconImageView.heightAnchor.constraint(equalToConstant: 35)
+        ])
+        
+        // Açıklama etiketi için constraint'ler
+        descriptionTopConstraint = descriptionLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 15)
+        descriptionLeadingConstraint = descriptionLabel.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: 12)
+        descriptionTrailingConstraint = descriptionLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -15)
+        descriptionBottomConstraint = descriptionLabel.bottomAnchor.constraint(lessThanOrEqualTo: containerView.bottomAnchor, constant: -15)
+        
+        NSLayoutConstraint.activate([
+            descriptionTopConstraint,
+            descriptionLeadingConstraint,
+            descriptionTrailingConstraint,
+            descriptionBottomConstraint
         ])
     }
     
     func configure(with announcement: AnnouncementItem) {
-        // Başlık ayarla
-        if announcement.title.isEmpty {
-            titleLabel.isHidden = true
-            
-            // Başlık yoksa, açıklama metni için farklı konumlandırma
-            descriptionLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 15).isActive = true
-        } else {
-            titleLabel.isHidden = false
-            titleLabel.text = announcement.title
-        }
-        
-        // Açıklama ayarla
+        // Açıklama metnini ayarla
         descriptionLabel.text = announcement.description
         
-        // İkon ayarla
-        if let image = UIImage(named: announcement.imageName) {
-            iconImageView.image = image
-        } else {
-            // Duyuru türüne göre farklı ikonlar ve renkler
-            var iconName = "bell.fill"
-            var iconColor = UIColor.systemPurple
-            
-            if announcement.imageName.contains("campaign") {
-                iconName = "tag.fill"
-                iconColor = .systemRed
-            } else if announcement.imageName.contains("maintenance") {
-                iconName = "wrench.fill"
-                iconColor = .systemOrange
-            } else if announcement.imageName.contains("new_products") {
-                iconName = "gift.fill"
-                iconColor = .systemGreen
-            } else if announcement.imageName.contains("survey") {
-                iconName = "text.bubble.fill"
-                iconColor = .systemBlue
-            }
-            
-            iconImageView.image = UIImage(systemName: iconName)
-            iconImageView.tintColor = iconColor
-            iconImageView.contentMode = .scaleAspectFit
-        }
+        // İkon ayarla - Mor megafon ikonunu kullan
+        iconImageView.image = UIImage(systemName: "megaphone.fill")
+        iconImageView.tintColor = UIColor(red: 0.37, green: 0.24, blue: 0.74, alpha: 1.0) // #5D3EBC
+        
+        // layoutIfNeeded ile hemen uygula
+        contentView.layoutIfNeeded()
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        
+        // İçeriği sıfırla ama constraint'leri değiştirme
         iconImageView.image = nil
-        titleLabel.text = nil
         descriptionLabel.text = nil
     }
 }

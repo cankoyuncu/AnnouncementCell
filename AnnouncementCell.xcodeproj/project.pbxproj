@@ -18,6 +18,7 @@
 		BE576D912D6DE9DD00CA99C5 /* AnnouncementCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE576D902D6DE9DD00CA99C5 /* AnnouncementCell.xib */; };
 		BE576D932D6EF19D00CA99C5 /* AnnouncementsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE576D922D6EF19D00CA99C5 /* AnnouncementsViewController.swift */; };
 		BE576D962D6F236700CA99C5 /* AnnouncementCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE576D942D6EF7CC00CA99C5 /* AnnouncementCollectionViewCell.swift */; };
+		BEF9269E2D704AD700149E17 /* AnnouncementDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF9269D2D704AD700149E17 /* AnnouncementDataManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		BE576D902D6DE9DD00CA99C5 /* AnnouncementCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AnnouncementCell.xib; sourceTree = "<group>"; };
 		BE576D922D6EF19D00CA99C5 /* AnnouncementsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementsViewController.swift; sourceTree = "<group>"; };
 		BE576D942D6EF7CC00CA99C5 /* AnnouncementCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementCollectionViewCell.swift; sourceTree = "<group>"; };
+		BEF9269D2D704AD700149E17 /* AnnouncementDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementDataManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +80,7 @@
 				BE576D902D6DE9DD00CA99C5 /* AnnouncementCell.xib */,
 				BE576D922D6EF19D00CA99C5 /* AnnouncementsViewController.swift */,
 				BE576D942D6EF7CC00CA99C5 /* AnnouncementCollectionViewCell.swift */,
+				BEF9269D2D704AD700149E17 /* AnnouncementDataManager.swift */,
 			);
 			path = AnnouncementCell;
 			sourceTree = "<group>";
@@ -161,6 +164,7 @@
 				BE576D752D6C888600CA99C5 /* AppDelegate.swift in Sources */,
 				BE576D772D6C888600CA99C5 /* SceneDelegate.swift in Sources */,
 				BE576D962D6F236700CA99C5 /* AnnouncementCollectionViewCell.swift in Sources */,
+				BEF9269E2D704AD700149E17 /* AnnouncementDataManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

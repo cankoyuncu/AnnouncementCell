@@ -1,8 +1,12 @@
+//title kaldır
+//icon kucult
+//golge biraz azalsın
+//
+
 import UIKit
 
-// Model sınıfını ekleyelim
+// Model sınıfını sadece description ve image içerecek şekilde güncelle
 struct AnnouncementItem {
-    let title: String
     let description: String
     let imageName: String
 }
@@ -82,43 +86,37 @@ class CustomBannerView: UIView {
     }
     
     private func setupButton() {
-        seeAllButton.backgroundColor = UIColor(red: 0.37, green: 0.24, blue: 0.74, alpha: 1.0)
-        seeAllButton.setTitle("Tüm duyuruları incele", for: .normal)
-        seeAllButton.setImage(UIImage(systemName: "arrow.right"), for: .normal)
-        seeAllButton.tintColor = UIColor(red: 0.9, green: 0.88, blue: 0.96, alpha: 1.0)
-        seeAllButton.layer.cornerRadius = 16
-        seeAllButton.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .medium)
-        
-        // Butonun sağ tarafına ikon eklemek için
-        seeAllButton.semanticContentAttribute = .forceRightToLeft
-        seeAllButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 0)
+        if #available(iOS 15.0, *) {
+            var config = UIButton.Configuration.filled()
+            config.title = "Tüm duyuruları incele"
+            config.image = UIImage(systemName: "arrow.right")
+            config.imagePlacement = .trailing
+            config.imagePadding = 8
+            config.baseBackgroundColor = UIColor(red: 0.37, green: 0.24, blue: 0.74, alpha: 1.0)
+            config.baseForegroundColor = UIColor(red: 0.9, green: 0.88, blue: 0.96, alpha: 1.0)
+            config.cornerStyle = .capsule
+            config.buttonSize = .medium
+            seeAllButton.configuration = config
+        } else {
+            // iOS 15 öncesi için eski yöntem
+            seeAllButton.backgroundColor = UIColor(red: 0.37, green: 0.24, blue: 0.74, alpha: 1.0)
+            seeAllButton.setTitle("Tüm duyuruları incele", for: .normal)
+            seeAllButton.setImage(UIImage(systemName: "arrow.right"), for: .normal)
+            seeAllButton.tintColor = UIColor(red: 0.9, green: 0.88, blue: 0.96, alpha: 1.0)
+            seeAllButton.layer.cornerRadius = 32
+            seeAllButton.clipsToBounds = true
+            seeAllButton.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+            seeAllButton.semanticContentAttribute = .forceRightToLeft
+            seeAllButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 0)
+        }
     }
 
     // Örnek veri yükleyen metot
     private func loadSampleData() {
-        let sampleAnnouncements = [
-            AnnouncementItem(
-                title: "Yeni Yıl Kampanyası",
-                description: "Yeni yıla özel tüm ürünlerde %25 indirim fırsatını kaçırmayın!",
-                imageName: "announcement1"
-            ),
-            AnnouncementItem(
-                title: "Sistem Bakımı Bildirimi",
-                description: "15 Mart Cuma gecesi 02:00-05:00 arası sistemlerimiz bakımda olacaktır",
-                imageName: "announcement2"
-            ),
-            AnnouncementItem(
-                title: "Mobil Uygulama Güncellemesi",
-                description: "Uygulamamızın yeni sürümünde artık tek tıkla ödeme yapabilirsiniz",
-                imageName: "announcement3"
-            ),
-            AnnouncementItem(
-                title: "Yeni Mağaza Açılışı",
-                description: "İzmir'deki yeni mağazamız 1 Nisan'da sizlerle buluşuyor! Açılışa özel indirimler sizleri bekliyor.",
-                imageName: "announcement4"
-            )
-        ]
+        //Duyurular AnnouncementDataManager dosyasından alınmaktadır.
+        let sampleAnnouncements = AnnouncementDataManager.shared.announcements
         
+        // Banner view'ı yapılandır.
         configure(with: sampleAnnouncements)
     }
     
@@ -155,12 +153,12 @@ extension CustomBannerView: UICollectionViewDelegate, UICollectionViewDataSource
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AnnouncementCell", for: indexPath) as! AnnouncementCollectionViewCell
         
         let announcement = announcements[indexPath.item]
-        cell.configure(with: announcement.title, description: announcement.description, imageName: announcement.imageName)
+        cell.configure(with:announcement)
         return cell
     }
     
     // Hücre boyutunu collectionView boyutuna eşitle (tam sayfa paging için)
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: Int) -> CGSize {
         return collectionView.bounds.size
     }
     
