@@ -153,7 +153,7 @@ extension CustomBannerView: UICollectionViewDelegate, UICollectionViewDataSource
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AnnouncementCell", for: indexPath) as! AnnouncementCollectionViewCell
         
         let announcement = announcements[indexPath.item]
-        cell.configure(with:announcement)
+        cell.configure(with:announcement.description, imageName: announcement.imageName)
         return cell
     }
     
