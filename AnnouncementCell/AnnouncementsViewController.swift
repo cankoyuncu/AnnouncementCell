@@ -1,8 +1,13 @@
-//
-//  AnnouncementsViewController.swift
-//  AnnouncementCell
-//
-//  Created by can.koyuncu on 26.02.2025.
-//
+import UIKit
 
-import Foundation
+class AnnouncementsViewController: UIViewController {
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        title = "Tüm Duyurular"
+        view.backgroundColor = .white
+        
+        // Daha sonra burada tüm duyuruları listeleyebilirsiniz
+    }
+}

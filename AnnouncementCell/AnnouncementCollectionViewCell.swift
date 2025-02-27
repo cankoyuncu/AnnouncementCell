@@ -1,8 +1,9 @@
 import UIKit
 
-class AnnouncementCollectionViewCell: UICollectionViewCell {
+public class AnnouncementCollectionViewCell: UICollectionViewCell {
     
-    static let identifier = "AnnouncementCell"
+    // Identifier ekliyorum
+    public static let identifier = "AnnouncementCell"
     
     private let containerView: UIView = {
         let view = UIView()
@@ -55,6 +56,7 @@ class AnnouncementCollectionViewCell: UICollectionViewCell {
     }
     
     private func setupViews() {
+        contentView.backgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.97, alpha: 1.0)
         contentView.addSubview(containerView)
         containerView.addSubview(imageView)
         containerView.addSubview(titleLabel)
@@ -62,45 +64,92 @@ class AnnouncementCollectionViewCell: UICollectionViewCell {
         
         NSLayoutConstraint.activate([
             // containerView constraints
-            containerView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
-            containerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
-            containerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
-            containerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
+            containerView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
+            containerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
+            containerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
+            containerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
             
-            // imageView constraints
-            imageView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 12),
-            imageView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
-            imageView.widthAnchor.constraint(equalToConstant: 70),
-            imageView.heightAnchor.constraint(equalToConstant: 70),
+            // imageView constraints - Sol üst köşede
+            imageView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 15),
+            imageView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 15),
+            imageView.widthAnchor.constraint(equalToConstant: 35),  // İkon boyutu
+            imageView.heightAnchor.constraint(equalToConstant: 35), // İkon boyutu
             
-            // titleLabel constraints
-            titleLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 16),
+            // titleLabel constraints - İkonun yanında ve üstte
+            titleLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 15),
             titleLabel.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 12),
-            titleLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -12),
+            titleLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -15),
             
-            // descriptionLabel constraints
+            // descriptionLabel constraints - Başlığın altında ikona göre hizalı
             descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
-            descriptionLabel.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 12),
-            descriptionLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -12),
-            descriptionLabel.bottomAnchor.constraint(lessThanOrEqualTo: containerView.bottomAnchor, constant: -16)
+            descriptionLabel.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 12), // İkon ile aynı hizada sol kenar
+            descriptionLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -15),
+            descriptionLabel.bottomAnchor.constraint(lessThanOrEqualTo: containerView.bottomAnchor, constant: -15)
         ])
+        
+        // Görünümü geliştirmek için stil ayarları
+        containerView.layer.cornerRadius = 14
+        containerView.layer.shadowOpacity = 0.15
+        containerView.layer.shadowRadius = 6
+        
+        titleLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        descriptionLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        descriptionLabel.numberOfLines = 4  // Daha fazla satır göstermesine izin verin
+        descriptionLabel.textAlignment = .left
     }
-    
-    func configure(with title: String, description: String, imageName: String) {
-        titleLabel.text = title
+
+    // configure metodunu güncelleyin
+    public func configure(with title: String, description: String, imageName: String) {
+        if title.isEmpty {
+            titleLabel.isHidden = true
+            
+            // Başlık yoksa açıklama metnini doğrudan ikona hizalı başlatın
+            NSLayoutConstraint.deactivate(descriptionLabel.constraints)
+            NSLayoutConstraint.activate([
+                descriptionLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 15),
+                descriptionLabel.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 12),
+                descriptionLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -15),
+                descriptionLabel.bottomAnchor.constraint(lessThanOrEqualTo: containerView.bottomAnchor, constant: -15)
+            ])
+        } else {
+            titleLabel.isHidden = false
+            titleLabel.text = title
+        }
+        
         descriptionLabel.text = description
         
         // Resmi ayarla (varsa)
         if let image = UIImage(named: imageName) {
             imageView.image = image
         } else {
-            // Varsayılan bir resim kullan
-            imageView.image = UIImage(systemName: "bell.fill")
-            imageView.tintColor = .systemPurple
+            // Farklı simge şekilleri ve renkleri
+            var iconName = "bell.fill"
+            var iconColor = UIColor.systemPurple
+            
+            // Duyuru türüne göre farklı ikonlar
+            if imageName.contains("campaign") {
+                iconName = "tag.fill"
+                iconColor = .systemRed
+            } else if imageName.contains("maintenance") {
+                iconName = "wrench.fill"
+                iconColor = .systemOrange
+            } else if imageName.contains("new_products") {
+                iconName = "gift.fill"
+                iconColor = .systemGreen
+            } else if imageName.contains("survey") {
+                iconName = "text.bubble.fill"
+                iconColor = .systemBlue
+            }
+            
+            imageView.image = UIImage(systemName: iconName)
+            imageView.tintColor = iconColor
+            imageView.backgroundColor = .clear // Arka plan rengini kaldır
+            imageView.contentMode = .scaleAspectFit
         }
     }
     
-    override func prepareForReuse() {
+    // public erişim belirteci ekledim
+    public override func prepareForReuse() {
         super.prepareForReuse()
         imageView.image = nil
         titleLabel.text = nil
