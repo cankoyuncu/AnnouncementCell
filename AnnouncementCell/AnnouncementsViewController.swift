@@ -11,7 +11,7 @@ class AnnouncementsViewController: UIViewController {
         super.viewDidLoad()
         
         title = "Tüm Duyurular"
-        view.backgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.97, alpha: 1.0)
+        view.backgroundColor = UIColor(red: 246/255.0, green: 247/255.0, blue: 249/255.0, alpha: 1.0) // #F6F7F9
         
         setupTableView()
         loadAnnouncements()
@@ -19,7 +19,8 @@ class AnnouncementsViewController: UIViewController {
     
     private func setupTableView() {
         view.addSubview(tableView)
-        tableView.backgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.97, alpha: 1.0)
+        // TableView arka plan rengi
+        tableView.backgroundColor = UIColor(red: 246/255.0, green: 247/255.0, blue: 249/255.0, alpha: 1.0) // #F6F7F9
         tableView.separatorStyle = .none
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -101,17 +102,18 @@ class AnnouncementTableViewCell: UITableViewCell {
     private func setupViews() {
         // Hücre ayarları
         selectionStyle = .none
-        backgroundColor = .clear
-        contentView.backgroundColor = .clear
+        backgroundColor = .white // Hücre şeffaf olsun
+        contentView.backgroundColor = .clear // Hücrenin içerik alanı şeffaf olsun
         
         // Container view ayarları
-        containerView.backgroundColor = .white
+        containerView.backgroundColor = UIColor(red: 246/255.0, green: 247/255.0, blue: 249/255.0, alpha: 1.0) // #F6F7F9
         containerView.layer.cornerRadius = 14
-        containerView.layer.shadowColor = UIColor.black.cgColor
-        containerView.layer.shadowOpacity = 0.15
-        containerView.layer.shadowOffset = CGSize(width: 0, height: 2)
-        containerView.layer.shadowRadius = 6
+        containerView.layer.shadowColor = UIColor.clear.cgColor
+        containerView.layer.shadowOpacity = 0
+        containerView.layer.shadowOffset = .zero
+        containerView.layer.shadowRadius = 0
         containerView.translatesAutoresizingMaskIntoConstraints = false
+        
         contentView.addSubview(containerView)
         
         // İkon ayarları

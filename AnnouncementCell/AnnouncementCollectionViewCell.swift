@@ -7,14 +7,18 @@ public class AnnouncementCollectionViewCell: UICollectionViewCell {
     // Identifier ekliyorum
     public static let identifier = "AnnouncementCell"
     
+    // containerView için arka plan rengi ayarı
     private let containerView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor(red: 240/255.0, green: 241/255.0, blue: 247/255.0, alpha: 1.0) //rgb(149, 149, 149)
         view.layer.cornerRadius = 10
-        view.layer.shadowColor = UIColor.black.cgColor
-        view.layer.shadowOpacity = 0.1
-        view.layer.shadowOffset = CGSize(width: 0, height: 2)
-        view.layer.shadowRadius = 4
+
+        //Gölge Ozellikleri kaldırılıyor.
+        view.layer.shadowColor = UIColor.clear.cgColor
+        view.layer.shadowOpacity = 0
+        view.layer.shadowOffset = .zero
+        view.layer.shadowRadius = 0
+
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -58,7 +62,8 @@ public class AnnouncementCollectionViewCell: UICollectionViewCell {
     }
     
     private func setupViews() {
-        contentView.backgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.97, alpha: 1.0)
+        // Container view ayarları
+        containerView.backgroundColor = UIColor(red: 246/255.0, green: 247/255.0, blue: 249/255.0, alpha: 1.0) // #F6F7F9
         contentView.addSubview(containerView)
         containerView.addSubview(imageView)
         containerView.addSubview(titleLabel)
@@ -89,10 +94,9 @@ public class AnnouncementCollectionViewCell: UICollectionViewCell {
             descriptionLabel.bottomAnchor.constraint(lessThanOrEqualTo: containerView.bottomAnchor, constant: -15)
         ])
         
-        // Görünümü geliştirmek için stil ayarları
+        // containerView için sonradan yapılan ayarlar
+        containerView.backgroundColor = UIColor(red: 235/255.0, green: 236/255.0, blue: 242/255.0, alpha: 1.0) // Daha koyu #EBECF2
         containerView.layer.cornerRadius = 14
-        containerView.layer.shadowOpacity = 0.15
-        containerView.layer.shadowRadius = 6
         
         titleLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         descriptionLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)

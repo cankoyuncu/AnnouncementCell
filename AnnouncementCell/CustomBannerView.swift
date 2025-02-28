@@ -1,5 +1,6 @@
-//icon kucult
-//golge biraz azalsın
+//ana sayfadaki gosterilen metin sayısı artsın
+//satırlar arası bosluklar duzenlenecek
+
 
 import UIKit
 
@@ -8,7 +9,6 @@ struct AnnouncementItem {
     let description: String
     let imageName: String
 }
-
 
 protocol CustomBannerViewDelegate: AnyObject {
     func didTapSeeAllAnnouncements()
