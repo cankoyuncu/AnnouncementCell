@@ -94,7 +94,10 @@ class CustomBannerView: UIView {
             config.imagePadding = 8
             config.baseBackgroundColor = UIColor(red: 0.37, green: 0.24, blue: 0.74, alpha: 1.0)
             config.baseForegroundColor = UIColor(red: 0.9, green: 0.88, blue: 0.96, alpha: 1.0)
-            config.cornerStyle = .capsule
+            
+            // Köşe yuvarlaklığını biraz azaltıyoruz (capsule'dan medium'a)
+            config.cornerStyle = .medium // Daha yumuşak köşeler için
+            
             config.buttonSize = .medium
             seeAllButton.configuration = config
         } else {
@@ -103,7 +106,10 @@ class CustomBannerView: UIView {
             seeAllButton.setTitle("Tüm duyuruları incele", for: .normal)
             seeAllButton.setImage(UIImage(systemName: "arrow.right"), for: .normal)
             seeAllButton.tintColor = UIColor(red: 0.9, green: 0.88, blue: 0.96, alpha: 1.0)
-            seeAllButton.layer.cornerRadius = 32
+            
+            // Köşe yuvarlaklığı için 32 değeri çok yüksek, 16 değeri daha uygun olacaktır
+            seeAllButton.layer.cornerRadius = 16 // Burada değişiklik yapıldı
+            
             seeAllButton.clipsToBounds = true
             seeAllButton.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .medium)
             seeAllButton.semanticContentAttribute = .forceRightToLeft
@@ -133,7 +139,6 @@ class CustomBannerView: UIView {
             }
         }
     }
-    
     
     @IBAction func seeAllButtonTapped(_ sender: UIButton) {
         print("Tüm duyurular butonuna tıklandı")
