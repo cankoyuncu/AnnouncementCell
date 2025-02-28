@@ -1,3 +1,5 @@
+//Announcement Ana Sayfa
+
 import UIKit
 
 public class AnnouncementCollectionViewCell: UICollectionViewCell {
@@ -72,8 +74,8 @@ public class AnnouncementCollectionViewCell: UICollectionViewCell {
             // imageView constraints - Sol üst köşede
             imageView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 15),
             imageView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 15),
-            imageView.widthAnchor.constraint(equalToConstant: 35),  // İkon boyutu
-            imageView.heightAnchor.constraint(equalToConstant: 35), // İkon boyutu
+            imageView.widthAnchor.constraint(equalToConstant: 20),  // İkon boyutu
+            imageView.heightAnchor.constraint(equalToConstant: 20), // İkon boyutu
             
             // titleLabel constraints - İkonun yanında ve üstte
             titleLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 15),

@@ -134,11 +134,11 @@ class AnnouncementTableViewCell: UITableViewCell {
             containerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             containerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
             
-            // İkon constraints - Sabit 35x35 boyutunda
+            // İkon constraints - Sabit 20x20 boyutunda
             iconImageView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 15),
             iconImageView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 15),
-            iconImageView.widthAnchor.constraint(equalToConstant: 35),
-            iconImageView.heightAnchor.constraint(equalToConstant: 35)
+            iconImageView.widthAnchor.constraint(equalToConstant: 20),
+            iconImageView.heightAnchor.constraint(equalToConstant: 20)
         ])
         
         // Açıklama etiketi için constraint'ler

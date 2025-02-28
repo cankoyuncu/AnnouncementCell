@@ -1,7 +1,5 @@
 //icon kucult
 //golge biraz azalsın
-//tum duyuruları incele butonunun kenarına yumusaklık verilmeli
-
 
 import UIKit
 
