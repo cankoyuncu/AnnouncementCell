@@ -65,7 +65,6 @@ class AnnouncementDataManager {
     }
     
     // Daha sonra eklenebilecek yeni duyuruları eklemek için fonksiyon
-    // Yeni duyuru eklemek için fonksiyon - title parametresi boş string olarak ayarlandı
         func addAnnouncement(description: String) {
             let announcement = AnnouncementItem(description: description, imageName: "announcement")
             announcements.append(announcement)

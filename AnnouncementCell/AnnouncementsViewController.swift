@@ -69,7 +69,7 @@ extension AnnouncementsViewController: UITableViewDataSource, UITableViewDelegat
         return UITableView.automaticDimension
     }
     
-    func tableView(_ tableView: UITableView, estimatedRowHeightForRowAt indexPath: IndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return 120 // Tahmini yükseklik
     }
 }

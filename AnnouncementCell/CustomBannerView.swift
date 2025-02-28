@@ -1,7 +1,7 @@
-//title kaldır
 //icon kucult
 //golge biraz azalsın
-//
+//tum duyuruları incele butonunun kenarına yumusaklık verilmeli
+
 
 import UIKit
 
@@ -158,7 +158,7 @@ extension CustomBannerView: UICollectionViewDelegate, UICollectionViewDataSource
     }
     
     // Hücre boyutunu collectionView boyutuna eşitle (tam sayfa paging için)
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: Int) -> CGSize {
+    private func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewFlowLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return collectionView.bounds.size
     }
     
