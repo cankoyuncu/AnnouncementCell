@@ -22,7 +22,7 @@ class ViewController: UIViewController {
             bannerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
             bannerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             bannerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            bannerView.heightAnchor.constraint(equalToConstant: 180)
+            bannerView.heightAnchor.constraint(equalToConstant: 400)
         ])
         
         // Arka plan rengini ayarla

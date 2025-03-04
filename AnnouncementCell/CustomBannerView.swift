@@ -54,16 +54,33 @@ class CustomBannerView: UIView {
                 view.bottomAnchor.constraint(equalTo: bottomAnchor)
             ])
             
+            // Page Control ve butonu CollectionView içine taşı
+            // if pageControl.superview != collectionView {
+            //     pageControl.removeFromSuperview()
+            //     collectionView.addSubview(pageControl)
+            // }
+            
+            // if seeAllButton.superview != collectionView {
+            //     seeAllButton.removeFromSuperview()
+            //     collectionView.addSubview(seeAllButton)
+            // }
+            
             // CollectionView'ı yapılandır
             setupCollectionView()
             
             // Butonun görünümünü ayarla
             setupButton()
             
+            // Page Control ve butonun konumunu ayarla
+            // setupPageControlAndButtonPosition()
+            
             // Örnek verilerle doldur
             loadSampleData()
         }
     }
+
+    // Page Control ve Buton konumlandırma metodu kaldırıldı
+
     
     private func setupCollectionView() {
         // Doğrudan string kullanın, 'AnnouncementCollectionViewCell.identifier' yerine
@@ -73,6 +90,14 @@ class CustomBannerView: UIView {
         collectionView.dataSource = self
         collectionView.isPagingEnabled = true
         collectionView.showsHorizontalScrollIndicator = false
+
+        //layout özellestirmeleri
+        if let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+            flowLayout.scrollDirection = .horizontal
+            flowLayout.minimumLineSpacing = 0
+            flowLayout.minimumInteritemSpacing = 0
+            flowLayout.sectionInset = UIEdgeInsets.zero
+        }
     
         // Köşeleri yuvarlat
         collectionView.layer.cornerRadius = 12
@@ -82,6 +107,32 @@ class CustomBannerView: UIView {
         pageControl.numberOfPages = 0
         pageControl.currentPage = 0
     }
+
+    private func setupPageControlAndButtonPosition() {
+    // Page Control ve butonun konumunu programatik olarak ayarlayın
+    pageControl.translatesAutoresizingMaskIntoConstraints = false
+    seeAllButton.translatesAutoresizingMaskIntoConstraints = false
+    
+    // Mevcut constraint'leri deaktive edin
+    NSLayoutConstraint.deactivate(pageControl.constraints)
+    NSLayoutConstraint.deactivate(seeAllButton.constraints)
+    
+    // Page Control için yeni constraint'ler
+    NSLayoutConstraint.activate([
+        pageControl.bottomAnchor.constraint(equalTo: seeAllButton.topAnchor, constant: -5),
+        pageControl.centerXAnchor.constraint(equalTo: collectionView.centerXAnchor),
+        pageControl.heightAnchor.constraint(equalToConstant: 20)
+    ])
+    
+    // Button için yeni constraint'ler
+    NSLayoutConstraint.activate([
+        seeAllButton.bottomAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: -15),
+        seeAllButton.centerXAnchor.constraint(equalTo: collectionView.centerXAnchor),
+        seeAllButton.heightAnchor.constraint(equalToConstant: 40),
+        seeAllButton.leadingAnchor.constraint(greaterThanOrEqualTo: collectionView.leadingAnchor, constant: 75),
+        seeAllButton.trailingAnchor.constraint(lessThanOrEqualTo: collectionView.trailingAnchor, constant: -75)
+    ])
+}
     
     private func setupButton() {
         if #available(iOS 15.0, *) {
@@ -142,6 +193,18 @@ class CustomBannerView: UIView {
         print("Tüm duyurular butonuna tıklandı")
         delegate?.didTapSeeAllAnnouncements()
     }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+
+        // Buton ve page control'ü görünür hale getirmek için
+        pageControl.isHidden = false
+        seeAllButton.isHidden = false
+        
+        // Z-indeksini ayarla (kontroller hücrelerin üstünde görünsün)
+        collectionView.bringSubviewToFront(pageControl)
+        collectionView.bringSubviewToFront(seeAllButton)
+    }
 }
 
 // MARK: - UICollectionView Delegate & DataSource
@@ -160,14 +223,18 @@ extension CustomBannerView: UICollectionViewDelegate, UICollectionViewDataSource
         return cell
     }
     
-    // Hücre boyutunu collectionView boyutuna eşitle (tam sayfa paging için)
-    private func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewFlowLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return collectionView.bounds.size
+    // Hücre boyutunu collectionView boyutuna eşitle (tam sayfa paging için) //private kaldırıldı
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        // CollectionView'ın tam genişliği ve uygun bir yükseklik
+        return CGSize(width: collectionView.bounds.width, height: collectionView.bounds.height - 80) // 80px, page control ve buton için ayrılan alan
     }
-    
-    // Sayfa değişimini takip et ve page control'ü güncelle
+
+    // Page control güncellemesi için metod ekleyin
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        let pageNumber = round(scrollView.contentOffset.x / scrollView.frame.size.width)
-        pageControl.currentPage = Int(pageNumber)
+        if (scrollView == collectionView) {
+            let pageWidth = scrollView.frame.size.width
+            let currentPage = Int(floor(scrollView.contentOffset.x / pageWidth))
+            pageControl.currentPage = currentPage
+        }
     }
 }

@@ -22,11 +22,11 @@ class AnnouncementDataManager {
     private func loadAnnouncements() {
         announcements = [
             AnnouncementItem(
-                description: "Yeni üyelerimize özel ilk alışverişte %30 indirim ve ücretsiz kargo ayrıcalığı sunuyoruz! Yeni üyelerimize özel ilk alışverişte %30 indirim ve ücretsiz kargo ayrıcalığı sunuyoruz! Yeni üyelerimize özel ilk alışverişte %30 indirim ve ücretsiz kargo ayrıcalığı sunuyoruz! Yeni üyelerimize özel ilk alışverişte %30 indirim ve ücretsiz kargo ayrıcalığı sunuyoruz!",
+                description: "Kasım kampanyası nedeniyle kargolarınızda anlık gecikme yaşanabilir. Lorem ipsum dolor Kasım kampanyası nedeniyle kargolarınızda anlık gecikme yaşanabilir. Kasım kampanyası nedeniyle kargolarınızda anlık gecikme yaşanabilir. Kasım kampanyası nedeniyle kargolarınızda anlık gecikme yaşanabilir.",
                 imageName: "announcement" //Tüm ikonlar "announcement" olarak standardize edildi
             ),
             AnnouncementItem(
-                description: "15 Mart Cuma gecesi 02:00-04:00 saatleri arasında sistemlerimiz bakımda olacağından hizmet veremeyeceğiz.",
+                description: "Lorem ipsum is a dummy or placeholder text commonly used in graphic design, publishing, and web development to fill empty spaces in a layout that does not yet have content.",
                 imageName: "announcement"
             ),
             AnnouncementItem(
@@ -34,7 +34,7 @@ class AnnouncementDataManager {
                 imageName: "announcement"
             ),
             AnnouncementItem(
-                description: "Hizmet kalitemizi artırmak için görüşleriniz bizim için çok değerli. Ankete katılarak fikirlerinizi bizimle paylaşın.",
+                description: "Hizmet kalitemizi artırmak için görüşleriniz bizim için çok değerli. Ankete katılarak fikirlerinizi bizimle paylaşın. Hizmet kalitemizi artırmak için görüşleriniz bizim için çok değerli. Ankete katılarak fikirlerinizi bizimle paylaşın.",
                 imageName: "announcement"
             ),
             AnnouncementItem(
@@ -58,7 +58,7 @@ class AnnouncementDataManager {
                 imageName: "announcement"
             ),
             AnnouncementItem(
-                description: "Kasım kampanyası nedeniyle kargolarınızda anlık gecikme yaşanabilir. Anlayışınız için teşekkür ederiz.",
+                description: "Kasım kampanyası nedeniyle kargolarınızda anlık gecikme yaşanabilir. Anlayışınız için teşekkür ederiz. Hizmet kalitemizi artırmak için görüşleriniz bizim için çok değerli. Ankete katılarak fikirlerinizi bizimle paylaşın.",
                 imageName: "announcement"
             ),
         ]

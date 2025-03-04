@@ -64,9 +64,10 @@ public class AnnouncementCollectionViewCell: UICollectionViewCell {
     private func setupViews() {
         // Container view ayarları
         containerView.backgroundColor = UIColor(red: 246/255.0, green: 247/255.0, blue: 249/255.0, alpha: 1.0) // #F6F7F9
+        
+        // Container view'ı ekle
         contentView.addSubview(containerView)
         containerView.addSubview(imageView)
-        containerView.addSubview(titleLabel)
         containerView.addSubview(descriptionLabel)
         
         NSLayoutConstraint.activate([
@@ -79,17 +80,12 @@ public class AnnouncementCollectionViewCell: UICollectionViewCell {
             // imageView constraints - Sol üst köşede
             imageView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 15),
             imageView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 15),
-            imageView.widthAnchor.constraint(equalToConstant: 20),  // İkon boyutu
-            imageView.heightAnchor.constraint(equalToConstant: 20), // İkon boyutu
+            imageView.widthAnchor.constraint(equalToConstant: 24),  // İkon boyutu
+            imageView.heightAnchor.constraint(equalToConstant: 24), // İkon boyutu
             
-            // titleLabel constraints - İkonun yanında ve üstte
-            titleLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 15),
-            titleLabel.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 12),
-            titleLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -15),
-            
-            // descriptionLabel constraints - Başlığın altında ikona göre hizalı
-            descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
-            descriptionLabel.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 12), // İkon ile aynı hizada sol kenar
+            // descriptionLabel constraints - ilk satır ikon ile aynı hizada başlasın
+            descriptionLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 15),
+            descriptionLabel.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 12),
             descriptionLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -15),
             descriptionLabel.bottomAnchor.constraint(lessThanOrEqualTo: containerView.bottomAnchor, constant: -15)
         ])
@@ -98,37 +94,26 @@ public class AnnouncementCollectionViewCell: UICollectionViewCell {
         containerView.backgroundColor = UIColor(red: 235/255.0, green: 236/255.0, blue: 242/255.0, alpha: 1.0) // Daha koyu #EBECF2
         containerView.layer.cornerRadius = 14
         
-        titleLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        descriptionLabel.numberOfLines = 0 // Sınırsız satır
+        descriptionLabel.lineBreakMode = .byWordWrapping // Kelime kelime satır sonları
         descriptionLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        descriptionLabel.numberOfLines = 5  // Daha fazla satır göstermesine izin verin
         descriptionLabel.textAlignment = .left
     }
 
     // configure metodunu güncelleyerek standart bir ikon kullanıyoruz ve title'ı gizliyoruz
 
     public func configure(with description: String, imageName: String) {
-        // Title etiketini view hiyerarşisinden kaldır
-        titleLabel.removeFromSuperview()
-            
-            // Açıklama metni için konumlandırma
+        //Acıklama metnini set ediyorum. Bunu sadece bir kez set etmelisin. Yoksa hata.
+        descriptionLabel.text = description
 
-            NSLayoutConstraint.deactivate(descriptionLabel.constraints)
-            NSLayoutConstraint.activate([
-                descriptionLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 15),
-                descriptionLabel.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 12),
-                descriptionLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -15),
-                descriptionLabel.bottomAnchor.constraint(lessThanOrEqualTo: containerView.bottomAnchor, constant: -15)
-            ])
-        
-            // Acıklama metni ayarla
-            descriptionLabel.text = description
+        // Standart mor duyuru ikonu kullan
+        imageView.image = UIImage(systemName: "megaphone.fill") // SF Symbol kullanıyoruz benzer bir ikon için
+        imageView.tintColor = UIColor(red: 0.37, green: 0.24, blue: 0.74, alpha: 1.0) // Mor renk #5D3EBC
+        imageView.backgroundColor = .clear
+        imageView.contentMode = .scaleAspectFit
 
-            // Standart mor duyuru ikonu kullan
-            imageView.image = UIImage(systemName: "megaphone.fill") // SF Symbol kullanıyoruz benzer bir ikon için
-            imageView.tintColor = UIColor(red: 0.37, green: 0.24, blue: 0.74, alpha: 1.0) // Mor renk #5D3EBC
-            imageView.backgroundColor = .clear
-            imageView.contentMode = .scaleAspectFit
-        
+        // Layout update. Degisikliklerin hemen uygulanması icin.  
+        layoutIfNeeded()      
     }
     
     // public erişim belirteci ekledim
