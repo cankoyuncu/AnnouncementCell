@@ -27,6 +27,15 @@ class CustomBannerView: UIView {
     
     // Announcement verileri
     private var announcements: [AnnouncementItem] = []
+
+    // Otomatik kaydırma icin zamanlayıcı ekliyoruz
+    private var autoScrollTimer: Timer?
+    private let autoScrollInterval: TimeInterval = 5.0
+
+    // Deşnşt ekleyip hafiza sinirini onluyoruz.
+    deinit {
+        stopAutoScrollTimer()
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -76,20 +85,62 @@ class CustomBannerView: UIView {
             
             // Örnek verilerle doldur
             loadSampleData()
+            startAutoScrollTimer()
         }
     }
 
-    // Page Control ve Buton konumlandırma metodu kaldırıldı
+    //zamanlayici baslatiliyior
+    private func startAutoScrollTimer() {
+        // Zamanlayıcı zaten varsa, önce durdurun
+        stopAutoScrollTimer()
+        
+        // Yeni bir zamanlayıcı oluşturun
+        autoScrollTimer = Timer.scheduledTimer(
+            timeInterval: autoScrollInterval,
+            target: self,
+            selector: #selector(scrollToNextAnnouncement),
+            userInfo: nil,
+            repeats: true
+        )
+    }
 
-    
+    //zamanlayici durdurma
+    private func stopAutoScrollTimer() {
+        autoScrollTimer?.invalidate()
+        autoScrollTimer = nil
+    }
+
+    //sonraki duyuruya gecme
+    @objc private func scrollToNextAnnouncement() {
+        guard !announcements.isEmpty else { return }
+
+        //mevcut sayfayı alın ve bir sonraki sayfaya geçin
+        let currentPage = pageControl.currentPage
+        let nextPage = (currentPage + 1) % announcements.count
+
+        // Page control'u guncelle
+        pageControl.currentPage = nextPage
+
+        //Hucreyi yeniden yuklemek yerine sadece icerigini guncelle
+        if let visibleCell = collectionView.visibleCells.first as? AnnouncementCollectionViewCell {
+            let announcement = announcements[nextPage]
+            //Mevcut hucrenin icerigini guncelle
+            visibleCell.configure(with: announcement.description, imageName: announcement.imageName)
+        }
+        // Kaydırma kodunu tamamen kaldırdık, çünkü artık kaydırma yapmıyoruz
+    }
+
     private func setupCollectionView() {
         // Doğrudan string kullanın, 'AnnouncementCollectionViewCell.identifier' yerine
         collectionView.register(AnnouncementCollectionViewCell.self,
                   forCellWithReuseIdentifier: "AnnouncementCell")
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.isPagingEnabled = true
+
+        //Kullanıcının hucreyi kaydirmasini engellemek icin:
+        collectionView.isPagingEnabled = false
         collectionView.showsHorizontalScrollIndicator = false
+        collectionView.isScrollEnabled = false
 
         //layout özellestirmeleri
         if let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
@@ -106,6 +157,19 @@ class CustomBannerView: UIView {
         // Paging efekti için UIPageControl'ü ayarla
         pageControl.numberOfPages = 0
         pageControl.currentPage = 0
+        pageControl.addTarget(self, action: #selector(pageControlValueChanged), for: .valueChanged)
+    }
+
+    // Page Control degistiginde cagrilacak metot
+    @objc private func pageControlValueChanged() {
+        let currentPage = pageControl.currentPage
+
+        // Hucreyi yeniden yuklemek yerine sadece icerigini guncelle
+        if let visibleCell = collectionView.visibleCells.first as? AnnouncementCollectionViewCell,
+            announcements.indices.contains(currentPage) {
+            let announcement = announcements[currentPage]
+            visibleCell.configure(with: announcement.description, imageName: announcement.imageName)
+        }
     }
 
     private func setupPageControlAndButtonPosition() {
@@ -187,16 +251,56 @@ class CustomBannerView: UIView {
                 self.collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .centeredHorizontally, animated: false)
             }
         }
+
+        //duyurular degistinde zamanlayici yeniden baslat
+        startAutoScrollTimer()
+    }
+
+    // Kullanıcı manuel kaydırma yaptığında zamanlayıcıyı sıfırla
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        //kullanıcı kaydırma yaparsa zamanlayıcıyı durdur
+        stopAutoScrollTimer()
+    }
+
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        if scrollView == collectionView {
+            // Sayfayı güncelle
+            let pageWidth = scrollView.frame.size.width
+            let currentPage = Int(floor(scrollView.contentOffset.x / pageWidth))
+            pageControl.currentPage = currentPage
+            
+            // Kullanıcının kaydırması bittikten sonra zamanlayıcıyı yeniden başlat
+            startAutoScrollTimer()
+        }
+    }
+
+    // Görünüm ağaçtan çıkarıldığında zamanlayıcıyı durdur
+    override func removeFromSuperview() {
+        super.removeFromSuperview()
+        stopAutoScrollTimer()
+    }
+    
+    // Uygulama arka plana gittiğinde zamanlayıcıyı durdur
+    override func didMoveToWindow() {
+        super.didMoveToWindow()
+        
+        if window != nil {
+            // Görünüm ekrana eklendiğinde zamanlayıcıyı başlat
+            startAutoScrollTimer()
+        } else {
+            // Görünüm ekrandan kaldırıldığında zamanlayıcıyı durdur
+            stopAutoScrollTimer()
+        }
     }
     
     @IBAction func seeAllButtonTapped(_ sender: UIButton) {
         print("Tüm duyurular butonuna tıklandı")
         delegate?.didTapSeeAllAnnouncements()
     }
-
+    
     override func layoutSubviews() {
         super.layoutSubviews()
-
+        
         // Buton ve page control'ü görünür hale getirmek için
         pageControl.isHidden = false
         seeAllButton.isHidden = false
@@ -204,6 +308,13 @@ class CustomBannerView: UIView {
         // Z-indeksini ayarla (kontroller hücrelerin üstünde görünsün)
         collectionView.bringSubviewToFront(pageControl)
         collectionView.bringSubviewToFront(seeAllButton)
+    }
+}
+
+// Array uzantısını sınıfın içinden çıkarın
+extension Array {
+    subscript(safe index: Index) -> Element? {
+        return indices.contains(index) ? self[index] : nil
     }
 }
 
@@ -227,14 +338,5 @@ extension CustomBannerView: UICollectionViewDelegate, UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         // CollectionView'ın tam genişliği ve uygun bir yükseklik
         return CGSize(width: collectionView.bounds.width, height: collectionView.bounds.height - 80) // 80px, page control ve buton için ayrılan alan
-    }
-
-    // Page control güncellemesi için metod ekleyin
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        if (scrollView == collectionView) {
-            let pageWidth = scrollView.frame.size.width
-            let currentPage = Int(floor(scrollView.contentOffset.x / pageWidth))
-            pageControl.currentPage = currentPage
-        }
     }
 }

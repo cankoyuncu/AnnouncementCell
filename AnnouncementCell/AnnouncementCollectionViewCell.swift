@@ -72,6 +72,7 @@ public class AnnouncementCollectionViewCell: UICollectionViewCell {
         
         NSLayoutConstraint.activate([
             // containerView constraints
+            // containerView.heightAnchor.constraint(lessThanOrEqualToConstant: 180) // Maksimum yükseklik sonradan aktiflestirebilirim
             containerView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
             containerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
             containerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
@@ -94,8 +95,8 @@ public class AnnouncementCollectionViewCell: UICollectionViewCell {
         containerView.backgroundColor = UIColor(red: 235/255.0, green: 236/255.0, blue: 242/255.0, alpha: 1.0) // Daha koyu #EBECF2
         containerView.layer.cornerRadius = 14
         
-        descriptionLabel.numberOfLines = 0 // Sınırsız satır
-        descriptionLabel.lineBreakMode = .byWordWrapping // Kelime kelime satır sonları
+        descriptionLabel.numberOfLines = 6 // 6 satir icerik gozukecek sekilde ayarlandi.
+        descriptionLabel.lineBreakMode = .byTruncatingTail // Sonunda ... ile kesilsin
         descriptionLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         descriptionLabel.textAlignment = .left
     }
@@ -104,9 +105,13 @@ public class AnnouncementCollectionViewCell: UICollectionViewCell {
 
     public func configure(with description: String, imageName: String) {
         //Acıklama metnini set ediyorum. Bunu sadece bir kez set etmelisin. Yoksa hata.
+        //Acıklama metnini kısaltarak ayarlıyorum. 
+        // descriptionLabel.numberOfLines = 6 zaten setupViews() icinde ayarlanmis.
+        // lineBreakMode = .byTruncaringTail ile 6.satirdan sonrasi otomatik olarak "..." ile kesilecek.
+
         descriptionLabel.text = description
 
-        // Standart mor duyuru ikonu kullan
+        // Announcement mor duyuru ikonu kullan
         imageView.image = UIImage(systemName: "megaphone.fill") // SF Symbol kullanıyoruz benzer bir ikon için
         imageView.tintColor = UIColor(red: 0.37, green: 0.24, blue: 0.74, alpha: 1.0) // Mor renk #5D3EBC
         imageView.backgroundColor = .clear
