@@ -1,4 +1,4 @@
-// Yeni bir extension dosyası oluşturun
+// Yeni bir extension dosyası olusturuyoruz
 class AnnouncementCell: UIView {
     @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var textLabel: UILabel!
@@ -6,9 +6,9 @@ class AnnouncementCell: UIView {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        // IconImageView'ın height constraint'i ambiguous hatası için
+        // IconImageView'ın height constraint'i ambiguous hatası icin
         for constraint in constraints {
-            // Bottom constraint'i varsa kaldır
+            // Bottom constraint'i varsa kaldir
             if constraint.firstItem === iconImageView && constraint.firstAttribute == .bottom {
                 constraint.isActive = false
             }

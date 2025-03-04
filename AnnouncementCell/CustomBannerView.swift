@@ -1,10 +1,8 @@
-//ana sayfadaki gosterilen metin sayısı artsın
 //satırlar arası bosluklar duzenlenecek
 
 
 import UIKit
 
-// Model sınıfını sadece description ve image içerecek şekilde güncelle
 struct AnnouncementItem {
     let description: String
     let imageName: String
@@ -32,7 +30,7 @@ class CustomBannerView: UIView {
     private var autoScrollTimer: Timer?
     private let autoScrollInterval: TimeInterval = 5.0
 
-    // Deşnşt ekleyip hafiza sinirini onluyoruz.
+    // Deinit ekleyip hafiza sızıntısını önlüyoruz.
     deinit {
         stopAutoScrollTimer()
     }
@@ -63,25 +61,11 @@ class CustomBannerView: UIView {
                 view.bottomAnchor.constraint(equalTo: bottomAnchor)
             ])
             
-            // Page Control ve butonu CollectionView içine taşı
-            // if pageControl.superview != collectionView {
-            //     pageControl.removeFromSuperview()
-            //     collectionView.addSubview(pageControl)
-            // }
-            
-            // if seeAllButton.superview != collectionView {
-            //     seeAllButton.removeFromSuperview()
-            //     collectionView.addSubview(seeAllButton)
-            // }
-            
             // CollectionView'ı yapılandır
             setupCollectionView()
             
             // Butonun görünümünü ayarla
             setupButton()
-            
-            // Page Control ve butonun konumunu ayarla
-            // setupPageControlAndButtonPosition()
             
             // Örnek verilerle doldur
             loadSampleData()
@@ -207,10 +191,14 @@ class CustomBannerView: UIView {
             config.imagePadding = 8
             config.baseBackgroundColor = UIColor(red: 0.37, green: 0.24, blue: 0.74, alpha: 1.0)
             config.baseForegroundColor = UIColor(red: 0.9, green: 0.88, blue: 0.96, alpha: 1.0)
-            
-            // Köşe yuvarlaklığını biraz azaltıyoruz (capsule'dan medium'a)
             config.cornerStyle = .medium // Daha yumuşak köşeler için
             
+            // Font boyutu: 12px 
+            config.titleTextAttributesTransformer =  UIConfigurationTextAttributesTransformer { incoming in
+                var outgoing = incoming
+                outgoing.font = UIFont.systemFont(ofSize: 12, weight: .medium)
+                return outgoing
+            }
             config.buttonSize = .medium
             seeAllButton.configuration = config
         } else {
@@ -220,17 +208,17 @@ class CustomBannerView: UIView {
             seeAllButton.setImage(UIImage(systemName: "arrow.right"), for: .normal)
             seeAllButton.tintColor = UIColor(red: 0.9, green: 0.88, blue: 0.96, alpha: 1.0)
             
-            // Köşe yuvarlaklığı için 32 değeri çok yüksek, 16 değeri daha uygun olacaktır
-            seeAllButton.layer.cornerRadius = 16 // Burada değişiklik yapıldı
-            
+            seeAllButton.layer.cornerRadius = 16    
             seeAllButton.clipsToBounds = true
-            seeAllButton.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+
+            //Font 12px
+            seeAllButton.titleLabel?.font = UIFont.systemFont(ofSize: 12, weight: .medium)
+
             seeAllButton.semanticContentAttribute = .forceRightToLeft
             seeAllButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 0)
         }
     }
 
-    // Örnek veri yükleyen metot
     private func loadSampleData() {
         //Duyurular AnnouncementDataManager dosyasından alınmaktadır.
         let sampleAnnouncements = AnnouncementDataManager.shared.announcements
@@ -252,13 +240,13 @@ class CustomBannerView: UIView {
             }
         }
 
-        //duyurular degistinde zamanlayici yeniden baslat
+        // Duyurular degistinde zamanlayici yeniden baslat
         startAutoScrollTimer()
     }
 
     // Kullanıcı manuel kaydırma yaptığında zamanlayıcıyı sıfırla
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        //kullanıcı kaydırma yaparsa zamanlayıcıyı durdur
+        // Kullanıcı kaydırma yaparsa zamanlayıcıyı durdur
         stopAutoScrollTimer()
     }
 

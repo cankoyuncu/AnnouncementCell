@@ -102,7 +102,7 @@ class AnnouncementTableViewCell: UITableViewCell {
     private func setupViews() {
         // Hücre ayarları
         selectionStyle = .none
-        backgroundColor = .white // Hücre şeffaf olsun
+        backgroundColor = .white // Hücrenin arka plan rengi
         contentView.backgroundColor = .clear // Hücrenin içerik alanı şeffaf olsun
         
         // Container view ayarları

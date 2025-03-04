@@ -13,7 +13,7 @@ public class AnnouncementCollectionViewCell: UICollectionViewCell {
         view.backgroundColor = UIColor(red: 240/255.0, green: 241/255.0, blue: 247/255.0, alpha: 1.0) //rgb(149, 149, 149)
         view.layer.cornerRadius = 10
 
-        //Gölge Ozellikleri kaldırılıyor.
+        //Golge ozellikleri kaldırılıyor.
         view.layer.shadowColor = UIColor.clear.cgColor
         view.layer.shadowOpacity = 0
         view.layer.shadowOffset = .zero
