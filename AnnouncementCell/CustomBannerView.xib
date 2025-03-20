@@ -20,10 +20,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="d1w-FD-HGj">
-                    <rect key="frame" x="5" y="5" width="383" height="380"/>
+                    <rect key="frame" x="5" y="5" width="383" height="325"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="380" id="swB-h2-6iv"/>
+                        <constraint firstAttribute="height" constant="325" id="swB-h2-6iv"/>
                     </constraints>
                     <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="UYS-Ej-Ueo">
                         <size key="itemSize" width="393" height="120"/>
@@ -33,18 +33,18 @@
                     </collectionViewFlowLayout>
                 </collectionView>
                 <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="dTY-c1-jYF">
-                    <rect key="frame" x="138" y="297" width="117" height="20"/>
+                    <rect key="frame" x="138" y="302" width="117" height="20"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="20" id="pQr-Xy-z9l"/>
                     </constraints>
-                    <color key="pageIndicatorTintColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="pageIndicatorTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <color key="currentPageIndicatorTintColor" red="0.63137254899999995" green="0.070588235289999995" blue="0.92941176469999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                 </pageControl>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wcQ-r7-Fzz">
-                    <rect key="frame" x="75" y="327" width="243" height="40"/>
+                    <rect key="frame" x="40" y="332" width="313" height="35"/>
                     <color key="backgroundColor" red="0.36862745098039218" green="0.24313725490196078" blue="0.73725490196078436" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="40" id="wRd-Pa-enD"/>
+                        <constraint firstAttribute="height" constant="35" id="wRd-Pa-enD"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                     <inset key="contentEdgeInsets" minX="16" minY="8" maxX="16" maxY="8"/>
@@ -67,11 +67,11 @@
                 <constraint firstAttribute="bottom" secondItem="wcQ-r7-Fzz" secondAttribute="bottom" constant="100" id="0oB-rB-0w8"/>
                 <constraint firstAttribute="trailing" secondItem="d1w-FD-HGj" secondAttribute="trailing" constant="5" id="882-Ew-Jd3"/>
                 <constraint firstItem="d1w-FD-HGj" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="5" id="Hwa-rA-Ezj"/>
-                <constraint firstAttribute="trailing" secondItem="wcQ-r7-Fzz" secondAttribute="trailing" constant="75" id="MAS-eC-GkK"/>
+                <constraint firstAttribute="trailing" secondItem="wcQ-r7-Fzz" secondAttribute="trailing" constant="40" id="MAS-eC-GkK"/>
                 <constraint firstItem="dTY-c1-jYF" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="138" id="Rbz-1H-BFT"/>
                 <constraint firstItem="wcQ-r7-Fzz" firstAttribute="top" secondItem="dTY-c1-jYF" secondAttribute="bottom" constant="10" id="h11-sK-jCz"/>
                 <constraint firstItem="dTY-c1-jYF" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="tP4-LP-rem"/>
-                <constraint firstItem="wcQ-r7-Fzz" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="75" id="tdi-va-C1T"/>
+                <constraint firstItem="wcQ-r7-Fzz" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="40" id="tdi-va-C1T"/>
                 <constraint firstItem="d1w-FD-HGj" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="5" id="wNZ-te-S4i"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

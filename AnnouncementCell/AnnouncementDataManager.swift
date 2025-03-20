@@ -23,7 +23,7 @@ struct RuleCase: Codable {
     enum CodingKeys: String, CodingKey {
         case code, id, next
         case caseData = "case" // JSON'daki "case" alanını Swift'teki caseData ile eşleştir
-    }
+    }   
 }
 
 struct RuleAttribute: Codable {

@@ -1,5 +1,4 @@
 import UIKit
-
 class ViewController: UIViewController {
     
     private var bannerView: CustomBannerView!
