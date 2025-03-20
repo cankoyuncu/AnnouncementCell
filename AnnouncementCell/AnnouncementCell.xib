@@ -21,13 +21,9 @@
                         <constraint firstAttribute="width" constant="24" id="k8b-bi-M5e"/>
                     </constraints>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ec7-Mm-H6V">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ec7-Mm-H6V">
                     <rect key="frame" x="56" y="16" width="321" height="73"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="321" id="led-Lw-es8"/>
-                        <constraint firstAttribute="height" constant="73" id="nny-wa-uy9"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -40,6 +36,7 @@
                 <constraint firstItem="gcr-vk-14m" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="7hw-3a-GL3"/>
                 <constraint firstItem="ec7-Mm-H6V" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="16" id="LSy-SX-en1"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="ec7-Mm-H6V" secondAttribute="trailing" constant="16" id="XYZ-12-abc"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="ec7-Mm-H6V" secondAttribute="bottom" constant="16" id="bottom-constraint"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
